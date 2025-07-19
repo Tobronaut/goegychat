@@ -19,7 +19,7 @@ RUN apk add --no-cache git
 
 COPY package.json package-lock.json ./
 
-# ❗ devDependencies wie @sveltejs/adapter-static werden gebraucht!
+# Wichtig: devDependencies wie @sveltejs/adapter-static sind notwendig
 RUN npm install
 
 COPY . .
