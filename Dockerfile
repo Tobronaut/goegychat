@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-# Initialize device type args
 ARG USE_CUDA=false
 ARG USE_OLLAMA=false
 ARG USE_CUDA_VER=cu128
@@ -16,13 +15,12 @@ ARG BUILD_HASH
 
 WORKDIR /app
 
-# Git wird benötigt, um den aktuellen Build-Hash zu speichern
 RUN apk add --no-cache git
 
 COPY package.json package-lock.json ./
 
-# ✅ Nur Produktions-Abhängigkeiten installieren (z. B. kein Cypress)
-RUN npm install --omit=dev
+# ❗ devDependencies wie @sveltejs/adapter-static werden gebraucht!
+RUN npm install
 
 COPY . .
 ENV APP_BUILD_HASH=${BUILD_HASH}
@@ -132,4 +130,4 @@ ARG BUILD_HASH
 ENV WEBUI_BUILD_VERSION=${BUILD_HASH}
 ENV DOCKER=true
 
-CMD [ "bash", "start.sh"]
+CMD [ "bash", "start.sh" ]
